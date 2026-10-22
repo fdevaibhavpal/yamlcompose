@@ -38,7 +38,7 @@ export function Header({ variant = "home" }: { variant?: "home" | "playground" }
         </nav>
 
         <a
-          href="https://github.com"
+          href="https://github.com/fdevaibhavpal/yamlcompose"
           target="_blank"
           rel="noopener noreferrer"
           onClick={nav}

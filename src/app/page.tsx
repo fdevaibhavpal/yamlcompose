@@ -10,10 +10,10 @@ export default function Home() {
     <div className="flex min-h-screen flex-col">
       <Header />
 
-      <section className="flex min-h-[calc(100svh-61px)] w-full items-center overflow-hidden py-8">
+      <section className="flex w-full items-center overflow-hidden py-8 lg:min-h-[calc(100svh-61px)]">
         <div className="mx-auto grid w-full max-w-[1800px] grid-cols-1 items-stretch gap-8 px-4 sm:px-6 lg:grid-cols-[minmax(0,420px)_1fr] lg:gap-12">
           <Hero />
-          <div className="hidden h-full min-h-[560px] w-full lg:block">
+          <div className="h-[420px] w-full sm:h-[480px] lg:h-full lg:min-h-[560px]">
             <HeroPreview />
           </div>
         </div>
