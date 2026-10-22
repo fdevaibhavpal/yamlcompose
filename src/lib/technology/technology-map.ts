@@ -1,0 +1,146 @@
+import type { ServiceCategory } from "@/types/compose";
+
+export interface TechnologyInfo {
+  label: string;
+  category: ServiceCategory;
+}
+
+export const TECHNOLOGY_MAP: Record<string, TechnologyInfo> = {
+  postgres: { label: "PostgreSQL", category: "database" },
+  postgresql: { label: "PostgreSQL", category: "database" },
+  mysql: { label: "MySQL", category: "database" },
+  mariadb: { label: "MariaDB", category: "database" },
+  mongo: { label: "MongoDB", category: "database" },
+  mongodb: { label: "MongoDB", category: "database" },
+  cassandra: { label: "Cassandra", category: "database" },
+  cockroachdb: { label: "CockroachDB", category: "database" },
+  sqlite: { label: "SQLite", category: "database" },
+  influxdb: { label: "InfluxDB", category: "database" },
+  neo4j: { label: "Neo4j", category: "database" },
+  couchdb: { label: "CouchDB", category: "database" },
+  clickhouse: { label: "ClickHouse", category: "database" },
+  dynamodb: { label: "DynamoDB", category: "database" },
+  supabase: { label: "Supabase", category: "database" },
+
+  redis: { label: "Redis", category: "cache" },
+  memcached: { label: "Memcached", category: "cache" },
+  dragonfly: { label: "Dragonfly", category: "cache" },
+
+  rabbitmq: { label: "RabbitMQ", category: "queue" },
+  kafka: { label: "Apache Kafka", category: "queue" },
+  "apache-kafka": { label: "Apache Kafka", category: "queue" },
+  nats: { label: "NATS", category: "queue" },
+  activemq: { label: "ActiveMQ", category: "queue" },
+  zookeeper: { label: "ZooKeeper", category: "queue" },
+  celery: { label: "Celery", category: "worker" },
+  sqs: { label: "Amazon SQS", category: "queue" },
+
+  nginx: { label: "Nginx", category: "proxy" },
+  traefik: { label: "Traefik", category: "proxy" },
+  caddy: { label: "Caddy", category: "proxy" },
+  haproxy: { label: "HAProxy", category: "proxy" },
+  envoy: { label: "Envoy", category: "proxy" },
+
+  node: { label: "Node.js", category: "application" },
+  nodejs: { label: "Node.js", category: "application" },
+  python: { label: "Python", category: "application" },
+  golang: { label: "Go", category: "application" },
+  go: { label: "Go", category: "application" },
+  java: { label: "Java", category: "application" },
+  openjdk: { label: "Java", category: "application" },
+  ruby: { label: "Ruby", category: "application" },
+  php: { label: "PHP", category: "application" },
+  rust: { label: "Rust", category: "application" },
+  dotnet: { label: ".NET", category: "application" },
+  django: { label: "Django", category: "application" },
+  flask: { label: "Flask", category: "application" },
+  fastapi: { label: "FastAPI", category: "application" },
+  rails: { label: "Ruby on Rails", category: "application" },
+  laravel: { label: "Laravel", category: "application" },
+  spring: { label: "Spring", category: "application" },
+  express: { label: "Express", category: "application" },
+  nextjs: { label: "Next.js", category: "application" },
+  "next.js": { label: "Next.js", category: "application" },
+  react: { label: "React", category: "application" },
+  vue: { label: "Vue.js", category: "application" },
+  angular: { label: "Angular", category: "application" },
+  deno: { label: "Deno", category: "application" },
+  bun: { label: "Bun", category: "application" },
+
+  minio: { label: "MinIO", category: "storage" },
+  s3: { label: "Amazon S3", category: "storage" },
+
+  elasticsearch: { label: "Elasticsearch", category: "search" },
+  opensearch: { label: "OpenSearch", category: "search" },
+  solr: { label: "Apache Solr", category: "search" },
+  meilisearch: { label: "Meilisearch", category: "search" },
+  typesense: { label: "Typesense", category: "search" },
+  algolia: { label: "Algolia", category: "search" },
+
+  prometheus: { label: "Prometheus", category: "monitoring" },
+  grafana: { label: "Grafana", category: "monitoring" },
+  jaeger: { label: "Jaeger", category: "monitoring" },
+  loki: { label: "Loki", category: "monitoring" },
+  sentry: { label: "Sentry", category: "monitoring" },
+  datadog: { label: "Datadog", category: "monitoring" },
+  cadvisor: { label: "cAdvisor", category: "monitoring" },
+
+  ollama: { label: "Ollama", category: "ai" },
+  openai: { label: "OpenAI", category: "ai" },
+  langchain: { label: "LangChain", category: "ai" },
+  chromadb: { label: "ChromaDB", category: "ai" },
+  chroma: { label: "Chroma", category: "ai" },
+  qdrant: { label: "Qdrant", category: "ai" },
+  weaviate: { label: "Weaviate", category: "ai" },
+  pinecone: { label: "Pinecone", category: "ai" },
+  milvus: { label: "Milvus", category: "ai" },
+  tensorflow: { label: "TensorFlow", category: "ai" },
+  pytorch: { label: "PyTorch", category: "ai" },
+  "huggingface": { label: "Hugging Face", category: "ai" },
+
+  docker: { label: "Docker", category: "unknown" },
+  alpine: { label: "Alpine", category: "unknown" },
+  ubuntu: { label: "Ubuntu", category: "unknown" },
+  busybox: { label: "BusyBox", category: "unknown" },
+  keycloak: { label: "Keycloak", category: "application" },
+  vault: { label: "Vault", category: "application" },
+  consul: { label: "Consul", category: "application" },
+  portainer: { label: "Portainer", category: "application" },
+};
+
+export const PORT_TECHNOLOGY_MAP: Record<string, string> = {
+  "5432": "postgres",
+  "3306": "mysql",
+  "27017": "mongodb",
+  "6379": "redis",
+  "11211": "memcached",
+  "5672": "rabbitmq",
+  "9092": "kafka",
+  "80": "nginx",
+  "443": "nginx",
+  "9200": "elasticsearch",
+  "9000": "minio",
+  "9090": "prometheus",
+  "3000": "grafana",
+  "8086": "influxdb",
+  "7474": "neo4j",
+  "5984": "couchdb",
+  "6333": "qdrant",
+};
+
+export const ENV_HINT_MAP: Record<string, string> = {
+  POSTGRES_DB: "postgres",
+  POSTGRES_USER: "postgres",
+  POSTGRES_PASSWORD: "postgres",
+  MYSQL_DATABASE: "mysql",
+  MYSQL_ROOT_PASSWORD: "mysql",
+  MONGO_INITDB_DATABASE: "mongodb",
+  MONGO_URI: "mongodb",
+  REDIS_URL: "redis",
+  RABBITMQ_DEFAULT_USER: "rabbitmq",
+  DATABASE_URL: "postgres",
+};
+
+export function normalizeTechnologyKey(raw: string): string {
+  return raw.toLowerCase().trim();
+}
