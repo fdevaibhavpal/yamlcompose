@@ -1,26 +1,142 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --paper: #f5f3ed;
+  --ink: #0a0a0a;
+  --lime: #d4fb3f;
+  --lime-dark: #aee023;
+  --panel: #ffffff;
+  --muted: #6b6b63;
+  --border: #0a0a0a;
+
+  --cat-service: #4d7cfe;
+  --cat-service-bg: #e8eeff;
+  --cat-database: #1f9254;
+  --cat-database-bg: #e3f6ea;
+  --cat-cache: #e0344c;
+  --cat-cache-bg: #fde8eb;
+  --cat-proxy: #4d7cfe;
+  --cat-proxy-bg: #e8eeff;
+  --cat-queue: #a24dfe;
+  --cat-queue-bg: #f1e8ff;
+  --cat-worker: #e0a632;
+  --cat-worker-bg: #fdf3e0;
+  --cat-storage: #c75a00;
+  --cat-storage-bg: #fcebdb;
+  --cat-search: #0aa6a6;
+  --cat-search-bg: #e0f7f7;
+  --cat-monitoring: #d44dfe;
+  --cat-monitoring-bg: #f8e8ff;
+  --cat-ai: #ff5fa2;
+  --cat-ai-bg: #ffe8f2;
+  --cat-unknown: #6b6b63;
+  --cat-unknown-bg: #eceae2;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-lime: var(--lime);
+  --color-panel: var(--panel);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--ink);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  background-image: radial-gradient(var(--ink) 1px, transparent 1px);
+  background-size: 22px 22px;
+  background-attachment: fixed;
+  background-color: var(--paper);
+}
+
+.font-mono {
+  font-family: var(--font-mono), ui-monospace, monospace;
+}
+
+/* Hard brutalist shadow utility */
+.brutal-shadow {
+  box-shadow: 4px 4px 0 0 var(--ink);
+}
+.brutal-shadow-sm {
+  box-shadow: 2px 2px 0 0 var(--ink);
+}
+.brutal-shadow-lg {
+  box-shadow: 6px 6px 0 0 var(--ink);
+}
+
+.brutal-border {
+  border: 2px solid var(--ink);
+}
+
+::selection {
+  background-color: var(--lime);
+  color: var(--ink);
+}
+
+/* Scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--ink) var(--paper);
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: var(--paper);
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--ink);
+  border: 2px solid var(--paper);
+}
+
+/* React Flow overrides for brutalist look */
+.react-flow__attribution {
+  display: none;
+}
+.react-flow__controls {
+  box-shadow: none;
+}
+.react-flow__controls-button {
+  border: 2px solid var(--ink);
+  background: var(--panel);
+  border-radius: 0;
+}
+.react-flow__controls-button:hover {
+  background: var(--lime);
+}
+.react-flow__edge-path {
+  stroke: var(--ink);
+  stroke-width: 2;
+}
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke: var(--lime-strong, #7a9a00);
+  stroke-width: 3;
+}
+.react-flow__handle {
+  width: 8px;
+  height: 8px;
+  background: var(--ink);
+  border: 2px solid var(--paper);
+  border-radius: 0;
+}
+.react-flow__minimap {
+  border: 2px solid var(--ink);
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+.status-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
 }
