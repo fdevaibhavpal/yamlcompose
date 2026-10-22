@@ -12,6 +12,8 @@ import {
   playSearchSound,
   playTableSound,
   playSlideTransitionSound,
+  playToggleOnSound,
+  playToggleOffSound,
 } from "@/lib/audio/sound-effects";
 
 interface PreviewNode {
@@ -341,19 +343,29 @@ export function HeroPreview() {
   const rootRef = useRef<HTMLDivElement>(null);
 
   /**
-   * Audio gate: the hero loops forever, so it may only make sound while it
-   * is actually on screen AND the user has interacted with the page at least
-   * once (browsers suspend AudioContext before any gesture anyway).
+   * Audio gate: sound defaults to "on" (the user's preference, persisted
+   * across visits), but browsers suspend AudioContext until a user gesture,
+   * so it only actually plays once unlocked by the first click/keydown AND
+   * the preview is on screen. The label itself is also a toggle so the user
+   * can explicitly turn it back off.
    */
   const audibleRef = useRef(false);
   const onScreenRef = useRef(true);
-  const [soundOn, setSoundOn] = useState(false);
+  const [soundWanted, setSoundWanted] = useState(true);
+  const [unlocked, setUnlocked] = useState(false);
+  const soundOn = soundWanted && unlocked;
 
   useEffect(() => {
-    const unlock = () => {
-      audibleRef.current = true;
-      setSoundOn(true);
-    };
+    const stored = window.localStorage.getItem("hero-sound-enabled");
+    if (stored !== null) setSoundWanted(stored === "true");
+  }, []);
+
+  useEffect(() => {
+    audibleRef.current = soundOn;
+  }, [soundOn]);
+
+  useEffect(() => {
+    const unlock = () => setUnlocked(true);
     const opts = { once: true } as const;
     window.addEventListener("pointerdown", unlock, opts);
     window.addEventListener("keydown", unlock, opts);
@@ -375,6 +387,17 @@ export function HeroPreview() {
       io?.disconnect();
     };
   }, []);
+
+  const toggleSound = () => {
+    setSoundWanted((prev) => {
+      const next = !prev;
+      window.localStorage.setItem("hero-sound-enabled", String(next));
+      setUnlocked(true);
+      if (next) playToggleOnSound();
+      else playToggleOffSound();
+      return next;
+    });
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -517,21 +540,33 @@ export function HeroPreview() {
       ref={rootRef}
       className="flex h-full w-full flex-col overflow-hidden brutal-border brutal-shadow bg-panel"
     >
-      <div className="flex items-center justify-between border-b-2 border-ink bg-[#0a0a0a] px-3 py-2 shrink-0">
-        <div className="flex items-center gap-1.5">
+      <div className="flex items-center justify-between gap-2 border-b-2 border-ink bg-[#0a0a0a] px-3 py-2 shrink-0">
+        <div className="flex items-center gap-1.5 shrink-0">
           <span className="h-2.5 w-2.5 rounded-full bg-[#e0344c]" />
           <span className="h-2.5 w-2.5 rounded-full bg-[#e0a632]" />
           <span className="h-2.5 w-2.5 rounded-full bg-[#1f9254]" />
         </div>
-        <div className="flex items-center gap-2">
-          <span
-            className="font-mono text-[9px] font-bold uppercase tracking-widest transition-colors"
-            style={{ color: soundOn ? "#d4fb3f" : "#f5f3ed40" }}
-            title={soundOn ? "Sound on" : "Click anywhere to enable sound"}
+        <div className="flex min-w-0 items-center gap-2">
+          <button
+            type="button"
+            onClick={toggleSound}
+            className="flex shrink-0 items-center gap-1 whitespace-nowrap rounded-sm px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-widest transition-colors hover:bg-white/10"
+            style={{ color: soundOn ? "#d4fb3f" : "#f5f3ed80" }}
+            title={
+              !unlocked
+                ? "Click to enable sound"
+                : soundOn
+                  ? "Sound on — click to mute"
+                  : "Sound off — click to enable"
+            }
           >
-            {soundOn ? "♪ SOUND ON" : "♪ CLICK FOR SOUND"}
-          </span>
-          <span className="font-mono text-[10px] font-bold text-[#f5f3ed]/70">
+            <span aria-hidden>{soundOn ? "♪" : "✕"}</span>
+            <span className="hidden sm:inline">
+              {!unlocked ? "CLICK FOR SOUND" : soundOn ? "SOUND ON" : "SOUND OFF"}
+            </span>
+          </button>
+          <span className="hidden h-3 w-px shrink-0 bg-[#f5f3ed]/20 sm:block" />
+          <span className="truncate font-mono text-[10px] font-bold text-[#f5f3ed]/70">
             docker-compose.yml
           </span>
         </div>
